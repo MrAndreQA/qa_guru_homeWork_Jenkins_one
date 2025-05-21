@@ -12,15 +12,19 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Map;
 
 public class RemoteTestBase {
-    String selenoidUserLogin = System.getProperty("SELENOID_USER_LOGIN");
-    String selenoidUserPassword = System.getProperty("SELENOID_USER_PASSWORD");
-    String remoteServerUrl = System.getProperty("SELENOID_REMOTE_SERVER");
+    String selenoidUserLogin = System.getProperty("selenoidUserLogin", "user1");
+    String selenoidUserPassword = System.getProperty("selenoidUserPassword", "1234");
+    String selenoidRemoteServerUrl = System.getProperty(
+            "selenoidRemoteServerUrl", "selenoid.autotests.cloud");
+    static String browser = System.getProperty("browser", "chrome");
+    static String browserVersion = System.getProperty("browserVersion", "128.0");
+    static String browserSize = System.getProperty("browserResolution", "1920x1080");
 
     @BeforeAll
     public static void beforeAll() {
-        Configuration.browser = System.getProperty("BROWSER");
-        Configuration.browserVersion = System.getProperty("BROWSER_VERSION");
-        Configuration.browserSize = System.getProperty("WINDOW_SIZE");
+        Configuration.browser = browser;
+        Configuration.browserVersion = browserVersion;
+        Configuration.browserSize = browserSize;
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 10000;
@@ -48,6 +52,6 @@ public class RemoteTestBase {
         Configuration.browserCapabilities = capabilities;
         //Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
         Configuration.remote = "https://" +
-                selenoidUserLogin + ":" + selenoidUserPassword +"@" + remoteServerUrl + "/wd/hub";
+                selenoidUserLogin + ":" + selenoidUserPassword +"@" + selenoidRemoteServerUrl + "/wd/hub";
     }
 }

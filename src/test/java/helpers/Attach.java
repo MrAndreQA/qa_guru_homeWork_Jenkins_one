@@ -12,7 +12,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
-    private static final String remoteServerUrl = System.getProperty("SELENOID_REMOTE_SERVER");
+    private static final String selenoidRemoteServerUrl = System.getProperty(
+            "selenoidRemoteServerUrl", "selenoid.autotests.cloud");
 
     @Attachment(value = "{attachName}", type = "image/png")
     public static byte[] screenshotAs(String attachName) {
@@ -44,7 +45,7 @@ public class Attach {
     }
 
     public static URL getVideoUrl() {
-        String videoUrl = "https://" + remoteServerUrl + "/video/" + sessionId() + ".mp4";
+        String videoUrl = "https://" + selenoidRemoteServerUrl + "/video/" + sessionId() + ".mp4";
         try {
             return new URL(videoUrl);
         } catch (MalformedURLException e) {

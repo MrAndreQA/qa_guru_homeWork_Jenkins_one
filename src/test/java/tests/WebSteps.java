@@ -4,7 +4,7 @@ import io.qameta.allure.Step;
 import les7PageObjects.pages.RegistrationPage;
 import les7PageObjects.pages.components.TableWindowComponent;
 
-public class WebSteps extends TestBase{
+public class WebSteps extends RemoteTestBase{
     @Step("Открываем форму - Student Registration Form")
     public void openPageStudentRegistrationForm() {
     new RegistrationPage().openPage()
