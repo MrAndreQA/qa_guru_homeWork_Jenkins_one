@@ -9,6 +9,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import static com.codeborne.selenide.Selenide.sessionId;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.isFirefox;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
@@ -31,6 +32,9 @@ public class Attach {
     }
 
     public static void browserConsoleLogs() {
+        if (isFirefox()) { // Пропустить для Firefox
+            return;
+        }
         attachAsText(
                 "Browser console logs",
                 String.join("\n", Selenide.getWebDriverLogs(BROWSER))
