@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "Some project name",
+    "environment": "qa.guru",
+    "comment": "some comment",
+    "reportLink": "",
+    "language": "en",
+    "allureFolder": "C:\\Users\\user\\AppData\\Local\\Temp\\9737078510208534286\\allure-report",
+    "enableChart": true
+    },
+    "telegram": {
+      "token": "8089044820:AAFp5sIbbShssUNU5SvdZoxG5D2MwT2RIiM",
+      "chat": "-1002553791144",
+      "replyTo": ""
+    }
+  }
