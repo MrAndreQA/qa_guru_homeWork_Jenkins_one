@@ -11,13 +11,24 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Map;
 
 public class RemoteTestBase {
-    String selenoidUserLogin = System.getProperty("selenoidUserLogin");
-    String selenoidUserPassword = System.getProperty("selenoidUserPassword");
-    String selenoidRemoteServerUrl = System.getProperty(
+    static String selenoidUserLogin = System.getProperty("selenoidUserLogin");
+    static String selenoidUserPassword = System.getProperty("selenoidUserPassword");
+    static String selenoidRemoteServerUrl = System.getProperty(
             "selenoidRemoteServerUrl");
     static String browser = System.getProperty("browser");
     static String browserVersion = System.getProperty("browserVersion");
     static String browserSize = System.getProperty("browserResolution");
+
+    public static void setupRemote() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                "enableVNC", true,
+                "enableVideo", true
+        ));
+        Configuration.browserCapabilities = capabilities;
+        Configuration.remote = "https://" +
+                selenoidUserLogin + ":" + selenoidUserPassword +"@" + selenoidRemoteServerUrl + "/wd/hub";
+    }
 
     @BeforeAll
     public static void beforeAll() {
@@ -27,6 +38,7 @@ public class RemoteTestBase {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 10000;
+        setupRemote();
     }
 
     @AfterEach
@@ -36,18 +48,5 @@ public class RemoteTestBase {
         Attach.browserConsoleLogs();
         Attach.addVideo();
         Selenide.closeWebDriver();
-    }
-
-    public void setupRemote() {
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = capabilities;
-        Configuration.remote = "https://" +
-                selenoidUserLogin + ":" + selenoidUserPassword +"@" + selenoidRemoteServerUrl + "/wd/hub";
     }
 }

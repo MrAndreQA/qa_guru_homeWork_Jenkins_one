@@ -1,6 +1,8 @@
 package tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.*;
+import io.qameta.allure.selenide.AllureSelenide;
 import les7PageObjects.testData.PracticeFormTestData;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Tag;
@@ -11,7 +13,7 @@ public class HomeWorkJenkinsWithParametersTest extends RemoteTestBase {
     private PracticeFormTestData data;
     @BeforeEach
     public void beforeEach() {
-        setupRemote(); // для удаленного запуска тестов
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         data = new PracticeFormTestData(); // для генерации тестовых данных
     }
 
