@@ -8,17 +8,16 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import java.util.Map;
 
 public class RemoteTestBase {
-    String selenoidUserLogin = System.getProperty("selenoidUserLogin", "user1");
-    String selenoidUserPassword = System.getProperty("selenoidUserPassword", "1234");
+    String selenoidUserLogin = System.getProperty("selenoidUserLogin");
+    String selenoidUserPassword = System.getProperty("selenoidUserPassword");
     String selenoidRemoteServerUrl = System.getProperty(
-            "selenoidRemoteServerUrl", "selenoid.autotests.cloud");
-    static String browser = System.getProperty("browser", "chrome");
-    static String browserVersion = System.getProperty("browserVersion", "128.0");
-    static String browserSize = System.getProperty("browserResolution", "1920x1080");
+            "selenoidRemoteServerUrl");
+    static String browser = System.getProperty("browser");
+    static String browserVersion = System.getProperty("browserVersion");
+    static String browserSize = System.getProperty("browserResolution");
 
     @BeforeAll
     public static void beforeAll() {
@@ -28,8 +27,6 @@ public class RemoteTestBase {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 10000;
-//      Configuration.holdBrowserOpen = true;
-        Configuration.holdBrowserOpen = false;
     }
 
     @AfterEach
@@ -50,7 +47,6 @@ public class RemoteTestBase {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
-        //Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
         Configuration.remote = "https://" +
                 selenoidUserLogin + ":" + selenoidUserPassword +"@" + selenoidRemoteServerUrl + "/wd/hub";
     }
